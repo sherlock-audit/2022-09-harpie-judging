@@ -5,7 +5,7 @@ ak1
 `reduceERC721Fee` function can not set fee when the NFT token ID is more than `type(uint128).max`
 
 ## Vulnerability Detail
-The NFT token ID can be any value within uint 256. 
+The NFT token ID can be any value within uint 256.
 As the reduceERC721Fee takes the `_id` argument as `uint 128`, when the reduceERC721Fee function is called with an NFT id that has above `type(uint128).max` , the fee can not set to the expected NFT id.
 
 ## Impact
