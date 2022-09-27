@@ -1,20 +1,24 @@
-0xNazgul
-# [NAZ-H1] ECDSA Signature Malleability
+IllIllI
+# Signature malleability not protected against
 
 ## Summary
-Currently `@openzeppelin/contracts ^4.6.0` is being used which isn't normally an issue but the contracts are using `"@openzeppelin/contracts/utils/cryptography/ECDSA.sol"` which has a signature malleability issue.
+OpenZeppelin has a vulnerability in versions lower than 4.7.3, which can be exploited by an attacker. The project uses a vulnerable version
 
 ## Vulnerability Detail
-[Full patch notes](https://github.com/OpenZeppelin/openzeppelin-contracts/security/advisories/GHSA-4h98-2769-gh6h)
+All of the conditions from the advisory are satisfied: the signature comes in a single `bytes` argument, `ECDSA.recover()` is used, and the signatures themselves are used for replay protection checks
+https://github.com/OpenZeppelin/openzeppelin-contracts/security/advisories/GHSA-4h98-2769-gh6h
+
+If a user calls `changeRecipientAddress()`, notices a mistake, then calls `changeRecipientAddress()` again, an attacker can use signature malleability to re-submit the first change request, as long as the old request has not expired yet.
 
 ## Impact
-The important part is that the issue is from `EIP-2098 compact signatures` and the use of single bytes argument in `ECDSA.recover`.
+The wrong, potentially now-malicious, address will be the valid change recipient, which could lead to the loss of funds (e.g. the attacker attacked, the user changed to another compromised address, noticed the issue, then changed to a whole new account address, but the attacker was able to change it back and withdraw the funds to the unprotected address).
 
 ## Code Snippet
-[`Vault.sol#L68`](https://github.com/sherlock-audit/2022-09-harpie-0xNazgul/blob/master/contracts/contracts/Vault.sol#L68)
+https://github.com/Harpieio/contracts/blob/97083d7ce8ae9d85e29a139b1e981464ff92b89e/package.json#L23
 
 ## Tool used
+
 Manual Review
 
 ## Recommendation
-Consider ensuring you are using at least the patched version of `@openzeppelin/contracts 4.7.3`.
+Change to version 4.7.3

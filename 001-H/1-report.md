@@ -1,23 +1,50 @@
-CodingNameKiki
-# transferfrom can lead to permanently loosing the NFT token.
+hickuphh3
+# Use `safeTransferFrom()` instead of `transferFrom()` for outgoing erc721 transfers
 
 ## Summary
-The function withdrawERC721() it's used from the user to witdraw an ERC721 token.
+
+It is recommended to use `safeTransferFrom()` instead of `transferFrom()` when transferring ERC721s out of the vault.
 
 ## Vulnerability Detail
-Transferfrom doesn't ensure that the receiver is capable of receiving the token, which can lead to permanently loosing the token.
-When using the transferFrom function of an ERC721 contract to send an NFT, if the receiving address is a smart contract and does not support ERC721, the NFT can be frozen in the contract. ERC721 has both safeTransferFrom and transferFrom. When using safeTransferFrom, the token contract checks to see that the receiver is an IERC721Receiver, which implies that it knows how to handle ERC721 tokens.
+
+The `transferFrom()` method is used instead of `safeTransferFrom()`, which I assume is a gas-saving measure. I however argue that this isn’t recommended because:
+
+- [OpenZeppelin’s documentation](https://docs.openzeppelin.com/contracts/4.x/api/token/erc721#IERC721-transferFrom-address-address-uint256-) discourages the use of `transferFrom()`; use `safeTransferFrom()` whenever possible
+- The recipient could have logic in the `onERC721Received()` function, which is only triggered in the `safeTransferFrom()` function and not in `transferFrom()`. A notable example of such contracts is the Sudoswap pair:
+
+```solidity
+function onERC721Received(
+  address,
+  address,
+  uint256 id,
+  bytes memory
+) public virtual returns (bytes4) {
+  IERC721 _nft = nft();
+  // If it's from the pair's NFT, add the ID to ID set
+  if (msg.sender == address(_nft)) {
+    idSet.add(id);
+  }
+  return this.onERC721Received.selector;
+}
+```
+
+- It helps ensure that the recipient is indeed capable of handling ERC721s.
 
 ## Impact
-transferfrom can lead to permanently loosing the NFT token.
+
+While unlikely because the recipient is the function caller, there is the potential loss of NFTs should the recipient is unable to handle the sent ERC721s.
 
 ## Code Snippet
-https://github.com/Harpieio/contracts/blob/97083d7ce8ae9d85e29a139b1e981464ff92b89e/contracts/Vault.sol#L137
-https://github.com/Harpieio/contracts/blob/97083d7ce8ae9d85e29a139b1e981464ff92b89e/contracts/Vault.sol#L129-L138
 
-## Tool used
-
-Manual Review
+[https://github.com/sherlock-audit/2022-09-harpie-hickuphh3/blob/7ef0e49d57918264f8049af46ba8738b77f2cbe2/contracts/contracts/Vault.sol#L137](https://github.com/sherlock-audit/2022-09-harpie-hickuphh3/blob/7ef0e49d57918264f8049af46ba8738b77f2cbe2/contracts/contracts/Vault.sol#L137)
 
 ## Recommendation
-Use ERC721's safeTransferFrom to ensure that the receiver can handle ERC721 tokens.
+
+Use `safeTransferFrom()` when sending out the NFT from the vault. 
+
+```diff
+- IERC721(_erc721Address).transferFrom(address(this), msg.sender, _id);
++ IERC721(_erc721Address).safeTransferFrom(address(this), msg.sender, _id);
+```
+
+Note that the vault would have to inherit the `IERC721Receiver` contract if the change is applied to `Transfer.sol` as well.
