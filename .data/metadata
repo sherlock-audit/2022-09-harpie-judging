@@ -1,0 +1,22 @@
+# METADATA
+INTRODUCTION=Line 1.\nLine 2
+
+# FIRST COMMIT
+FIRST_COMMIT_BRANCH=main(https://github.com/protocol/)
+FIRST_COMMIT_HASH=7cc30ef4e8247bf18cbcbdb03e26cfd28064f262(https://github.com/protocol/tree/7cc30ef4e8247bf18cbcbdb03e26cfd28064f262)
+FIRST_COMMIT_CONTRACTS=/src/Contract1.sol,/src/Contract2.sol,/src/Contract3.sol
+
+# SECOND COMMIT
+SECOND_COMMIT_BRANCH=main(https://github.com/protocol/)
+SECOND_COMMIT_HASH=c7e4ecb71b5efc69ba2416cdb8f54a23dc47e8d4(https://github.com/protocol/contracts/tree/c7e4ecb71b5efc69ba2416cdb8f54a23dc47e8d4)
+SECOND_COMMIT_CONTRACTS=/src/Contract1.sol,/src/Contract2.sol,/src/Contract3.sol
+
+# PROTOCOL ATTRIBUTES
+TEST_COVERAGE=Very good
+QUALITY_OF_TESTS=Very high
+LANGUAGE=Solidity
+UPGRADEABLE=Yes
+ASSEMBLY_USAGE=No
+SOLC_VERSION=0.8.11
+BLOCKCHAIN=Ethereum
+L2S=None
