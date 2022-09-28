@@ -1,0 +1,7 @@
+# METADATA
+INTRODUCTION=Harpie is the first on-chain firewall preventing hacks, scams, and theft. Harpie services monitor pending transactions for potential attacks.
+
+# FIRST COMMIT
+FIRST_COMMIT_BRANCH=main(https://github.com/Harpieio/contracts)
+FIRST_COMMIT_HASH=97083d7ce8ae9d85e29a139b1e981464ff92b89e(https://github.com/Harpieio/contracts/tree/97083d7ce8ae9d85e29a139b1e981464ff92b89e)
+FIRST_COMMIT_CONTRACTS=Transfer.sol,Vault.sol
