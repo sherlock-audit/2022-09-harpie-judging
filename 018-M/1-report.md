@@ -22,7 +22,6 @@ Loss of funds.
 ## Proof of Concept
 
 The user's balance is `type(uint128).max = 2**128`, but the incremented amount will be zero.
-[https://github.com/sherlock-audit/2022-09-harpie-hickuphh3/commit/83f321b95cfbf44514f5b88f98bf1576f5c3dc8c](https://github.com/sherlock-audit/2022-09-harpie-hickuphh3/commit/83f321b95cfbf44514f5b88f98bf1576f5c3dc8c)
 
 ## Recommendation
 

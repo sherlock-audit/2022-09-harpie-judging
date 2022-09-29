@@ -36,11 +36,11 @@ While unlikely because the recipient is the function caller, there is the potent
 
 ## Code Snippet
 
-[https://github.com/sherlock-audit/2022-09-harpie-hickuphh3/blob/7ef0e49d57918264f8049af46ba8738b77f2cbe2/contracts/contracts/Vault.sol#L137](https://github.com/sherlock-audit/2022-09-harpie-hickuphh3/blob/7ef0e49d57918264f8049af46ba8738b77f2cbe2/contracts/contracts/Vault.sol#L137)
+[https://github.com/Harpieio/contracts/blob/97083d7ce8ae9d85e29a139b1e981464ff92b89e/contracts/Vault.sol#L137](https://github.com/sHarpieio/contracts/blob/97083d7ce8ae9d85e29a139b1e981464ff92b89e/contracts/Vault.sol#L137)
 
 ## Recommendation
 
-Use `safeTransferFrom()` when sending out the NFT from the vault. 
+Use `safeTransferFrom()` when sending out the NFT from the vault.
 
 ```diff
 - IERC721(_erc721Address).transferFrom(address(this), msg.sender, _id);

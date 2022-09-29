@@ -12,7 +12,7 @@ As the reduceERC721Fee takes the `_id` argument as `uint 128`, when the reduceER
 `High :` RC721Fee can not  set fee when the NFT token ID value is more than `type(uint128).max`
 
 ## Code Snippet
-https://github.com/sherlock-audit/2022-09-harpie-aktech297/blob/0d4cb554e1179a8cb25131b400178f69de23f080/contracts/contracts/Vault.sol#L148
+https://github.com/Harpieio/contracts/blob/97083d7ce8ae9d85e29a139b1e981464ff92b89e/contracts/Vault.sol#L148
 
 ## Tool used
 Manual Review
