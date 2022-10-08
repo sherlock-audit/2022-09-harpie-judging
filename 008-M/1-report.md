@@ -55,3 +55,15 @@ Manual Review
 ## Recommendation
 
 Consider adding an upper limit on the amount of fee users need to pay
+
+## Lead Senior Watson
+
+Currently there is no way to revoke a change fee controller request. I'd shy away from using a mapping, adds unnecessary overhead when it can be handled by a `pendingFeeController` variable. Also important to note that mapping in `changeFeeController()` is not cleared.
+
+## Harpie Team
+
+Using leastwood's suggestion of a timelock for feeController. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/9b75a000f6cb0798e650f1433012b2b52f7a0e2b).
+
+## Lead Senior Watson
+
+Confirmed fix. 
