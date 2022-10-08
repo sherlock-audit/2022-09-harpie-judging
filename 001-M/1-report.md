@@ -48,3 +48,11 @@ Use `safeTransferFrom()` when sending out the NFT from the vault.
 ```
 
 Note that the vault would have to inherit the `IERC721Receiver` contract if the change is applied to `Transfer.sol` as well.
+
+## Harpie Team
+
+Fixed [here](https://github.com/Harpieio/contracts/pull/4/commits/aff1ee38e081194dd7d88835c37c864e759fd289).
+
+## Lead Senior Watson
+
+Makes sense to be compatible with contracts as recipients. Confirmed fix. 
