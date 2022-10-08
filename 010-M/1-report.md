@@ -22,3 +22,12 @@ Manual Review
 
 ## Recommendation
 Change to version 4.7.3
+
+## Lead Senior Watson
+Good find and the fix seems straightforward. Upgrade OZ.
+
+## Harpie Team
+Updated openzeppelin NPM package to do ECDSA 4.7.3. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/74e54edfe43480f71d30acac578627c38366ffa6).
+
+## Lead Senior Watson
+Confirmed fix. 
