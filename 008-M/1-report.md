@@ -62,7 +62,10 @@ Currently there is no way to revoke a change fee controller request. I'd shy awa
 
 ## Harpie Team
 
-Using leastwood's suggestion of a timelock for feeController. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/9b75a000f6cb0798e650f1433012b2b52f7a0e2b).
+Using leastwood's suggestion of a timelock for feeController. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/9b75a000f6cb0798e650f1433012b2b52f7a0e2b). Supplementary fixes for this issue: 
+[1](https://github.com/Harpieio/contracts/pull/4/commits/c60dc166aab6f7067379ea3f1e39be2ae17cc2dc), 
+[2](https://github.com/Harpieio/contracts/pull/4/commits/ea97548c379ec9b48e42724a52a1ee7bd4cce6b7), 
+[3](https://github.com/Harpieio/contracts/pull/4/commits/8cfc07577c49eb0b0713fb5499ea9313153c2c7c). 
 
 ## Lead Senior Watson
 
