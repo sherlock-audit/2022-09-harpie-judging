@@ -22,3 +22,12 @@ Change the function argument for `reduceERC721Fee` as shown below.
 `before fix :` function reduceERC721Fee(address _originalAddress, address _erc721Address, `uint128 _id,` uint128 _reduceBy) external returns (uint128)
 
 `after fix:` function reduceERC721Fee(address _originalAddress, address _erc721Address, `uint256 _id,` uint128 _reduceBy) external returns (uint128)
+
+## Lead Senior Watson
+Good find! ERC721 standard doesn't enforce how `tokenId` is implemented for a given NFT. Could definitely be greater than `uint128`, although I've never seen a case where this is true.
+
+## Harpie Team
+Changed to uint256. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/de97103372a8fcd7b45aaa1b21e06ba13b82bbc6). 
+
+## Lead Senior Watson
+Confirmed fix. 
