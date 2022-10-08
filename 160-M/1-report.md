@@ -19,3 +19,9 @@ Manual Review
 
 ## Recommendation
 Include a nonce in what is signed
+
+## Harpie Team
+Fixed by changing nonce system to an incremental system. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/ee6f5cdf52fa5604d4693331189edff6558c9b8a).
+
+## Lead Senior Watson
+Not an issue AFAIK, miners can't reorder txs unless they are signed with the same nonce. There would have to be some serious mis-use of this function by the recipient address, i.e. they would have to ask the server to sign for two different addresses and then broadcast the txs with the same nonce for this call. The proposed fix could probably be safely removed but doesn't hurt to keep it there.
