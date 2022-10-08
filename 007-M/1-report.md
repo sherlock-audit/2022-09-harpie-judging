@@ -28,3 +28,15 @@ Manual Review
 Use call instead of transfer(). Example:
 (bool succeeded, ) = _to.call{value: _amount}("");
 require(succeeded, "Transfer failed.");
+
+## Lead Senior Watson
+
+Fair considering recipient may be a contract with custom logic for `receive()`. But this is definitely recoverable if the fee recipient wasn't able to receive funds.
+
+## Harpie Team
+
+Moved to .call. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/655834654b5dc1225e9d2fcd2c07b00401aeac3b). 
+
+## Lead Senior Watson
+
+Confirmed fix. 
