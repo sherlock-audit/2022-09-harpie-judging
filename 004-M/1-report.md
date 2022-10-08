@@ -19,3 +19,9 @@ Manual Review
 
 ## Recommendation
 Include the `chain.id` in what's hashed
+
+## Harpie Team
+Added chainId to signature and signature validation. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/de24a50349ec014163180ba60b5305098f42eb14).
+
+## Lead Senior Watson
+This is true assuming the contract address is the same across other chains. Confirmed fix. 
