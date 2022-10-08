@@ -51,7 +51,7 @@ Note that the vault would have to inherit the `IERC721Receiver` contract if the 
 
 ## Harpie Team
 
-Fixed [here](https://github.com/Harpieio/contracts/pull/4/commits/aff1ee38e081194dd7d88835c37c864e759fd289).
+Added safeTransferFrom in withdraw function. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/aff1ee38e081194dd7d88835c37c864e759fd289).
 
 ## Lead Senior Watson
 
