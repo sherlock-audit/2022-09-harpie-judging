@@ -30,3 +30,14 @@ Manual Review
 Consider calculating the actual amount Vault received to call `logIncomingERC20()`
 Transfer the tokens first and compare pre-/after token balances to compute the actual transferred amount.
 
+## Harpie Team
+
+Using difference in balance in vault rather than token transfer amount. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/550065a5e9d625ef93a862bc5f74f140d57998fa).
+
+## Lead Senior Watson
+
+While it's true the fix does allow for compatabiliy with fee-on-transfer tokens, it does not correctly handle rebasing tokens. Might be useful to explicily note that rebasing tokens are not supported or instead you could adopt mint shares to represent the ownership over the vault's tokens.
+
+## Harpie Team
+
+On rebasing tokens, we just won't be able to support them for now.
