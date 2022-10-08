@@ -26,3 +26,13 @@ The user's balance is `type(uint128).max = 2**128`, but the incremented amount w
 ## Recommendation
 
 `amountStored` should be of type `uint256`. Alternatively, use [OpenZeppelin’s SafeCast library](https://docs.openzeppelin.com/contracts/4.x/api/utils#SafeCast) when casting from `uint256` to `uint128`.
+
+## Lead Senior Watson
+Not sure, any tokens which would have a token supply over `type(uint128).max` but I guess it's best to be proactive. The proposed fix does create some issues. Instead of having less tokens transferred to the vault, the contract will revert and prevent the transfer entirely. Arguably more funds would be at risk, so you may as well use `uint256` then or accept the risk and keep the slot packing.
+
+## Harpie Team
+Decided to accept the risk of reverts on leastwood's comment on this issue since it's a lot of gas savings and there probably arent useful tokens w/ supply over (uint128).max. Used @openzeppelin/SafeCast. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/1ff8c0482c690fd44558adb15cb40515623ac5cd).
+
+## Lead Senior Watson
+Confirmed fix. 
+
