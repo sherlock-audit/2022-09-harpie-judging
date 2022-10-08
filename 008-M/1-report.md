@@ -69,4 +69,4 @@ Using leastwood's suggestion of a timelock for feeController. Fix [here](https:/
 
 ## Lead Senior Watson
 
-Confirmed fix. 
+Confirmed fixes. 
