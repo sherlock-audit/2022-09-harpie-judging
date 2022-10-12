@@ -1,4 +1,7 @@
 hickuphh3
+
+medium
+
 # Unsafe casting of user amount from `uint256` to `uint128`
 
 ## Summary

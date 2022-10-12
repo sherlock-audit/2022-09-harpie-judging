@@ -1,4 +1,7 @@
 ak1
+
+medium
+
 # reduceERC721Fee function can not set fee when the NFT token ID is more than type(uint128).max
 
 ## Summary

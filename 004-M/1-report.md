@@ -1,4 +1,7 @@
 IllIllI
+
+medium
+
 # Cross-chain replay attacks are possible with `changeRecipientAddress()`
 
 ## Summary

@@ -1,4 +1,7 @@
 IllIllI
+
+medium
+
 # Signature malleability not protected against
 
 ## Summary

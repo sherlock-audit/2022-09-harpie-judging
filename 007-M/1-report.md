@@ -1,4 +1,7 @@
 CodingNameKiki
+
+medium
+
 # Usage of deprecated transfer() can result in revert.
 
 ## Summary

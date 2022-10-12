@@ -1,4 +1,7 @@
 minhquanym
+
+medium
+
 # Incompatability with deflationary / fee-on-transfer tokens
 
 ## Summary

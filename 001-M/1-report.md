@@ -1,4 +1,7 @@
 hickuphh3
+
+medium
+
 # Use `safeTransferFrom()` instead of `transferFrom()` for outgoing erc721 transfers
 
 ## Summary
