@@ -1,5 +1,7 @@
 # Issue M-1: Use `safeTransferFrom()` instead of `transferFrom()` for outgoing erc721 transfers 
+
 Source: https://github.com/sherlock-audit/2022-09-harpie-judging/tree/main/001-M 
+
 ## Found by 
 CodingNameKiki, millers.planet, 0xNazgul, cccz, Bnke0x0, Chom, Waze, IEatBabyCarrots, TomJ, Tomo, hickuphh3, pashov, sach1r0, Sm4rty, IllIllI, chainNue, Dravee
 
@@ -51,8 +53,18 @@ Use `safeTransferFrom()` when sending out the NFT from the vault.
 
 Note that the vault would have to inherit the `IERC721Receiver` contract if the change is applied to `Transfer.sol` as well.
 
+## Harpie Team
+
+Added safeTransferFrom in withdraw function. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/aff1ee38e081194dd7d88835c37c864e759fd289).
+
+## Lead Senior Watson
+
+Makes sense to be compatible with contracts as recipients. Confirmed fix. 
+
 # Issue M-2: Cross-chain replay attacks are possible with `changeRecipientAddress()` 
+
 Source: https://github.com/sherlock-audit/2022-09-harpie-judging/tree/main/004-M 
+
 ## Found by 
 minhquanym, JohnSmith, IllIllI
 
@@ -75,8 +87,16 @@ Manual Review
 ## Recommendation
 Include the `chain.id` in what's hashed
 
+## Harpie Team
+Added chainId to signature and signature validation. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/de24a50349ec014163180ba60b5305098f42eb14).
+
+## Lead Senior Watson
+This is true assuming the contract address is the same across other chains. Confirmed fix. 
+
 # Issue M-3: Incompatability with deflationary / fee-on-transfer tokens 
+
 Source: https://github.com/sherlock-audit/2022-09-harpie-judging/tree/main/005-M 
+
 ## Found by 
 Lambda, cccz, hansfriese, IEatBabyCarrots, rbserver, JohnSmith, minhquanym, Tomo, leastwood, dipp, defsec, HonorLt, IllIllI, saian, csanuragjain
 
@@ -109,9 +129,22 @@ Manual Review
 Consider calculating the actual amount Vault received to call `logIncomingERC20()`
 Transfer the tokens first and compare pre-/after token balances to compute the actual transferred amount.
 
+## Harpie Team
+
+Using difference in balance in vault rather than token transfer amount. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/550065a5e9d625ef93a862bc5f74f140d57998fa).
+
+## Lead Senior Watson
+
+While it's true the fix does allow for compatabiliy with fee-on-transfer tokens, it does not correctly handle rebasing tokens. Might be useful to explicily note that rebasing tokens are not supported or instead you could adopt mint shares to represent the ownership over the vault's tokens.
+
+## Harpie Team
+
+On rebasing tokens, we just won't be able to support them for now.
 
 # Issue M-4: Usage of deprecated transfer() can result in revert. 
+
 Source: https://github.com/sherlock-audit/2022-09-harpie-judging/tree/main/007-M 
+
 ## Found by 
 Lambda, cccz, yixxas, Waze, IEatBabyCarrots, pashov, 0xSmartContract, JohnSmith, Tomo, CodingNameKiki, sach1r0, IllIllI, csanuragjain, gogo
 
@@ -143,8 +176,22 @@ Use call instead of transfer(). Example:
 (bool succeeded, ) = _to.call{value: _amount}("");
 require(succeeded, "Transfer failed.");
 
+## Lead Senior Watson
+
+Fair considering recipient may be a contract with custom logic for `receive()`. But this is definitely recoverable if the fee recipient wasn't able to receive funds.
+
+## Harpie Team
+
+Moved to .call. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/655834654b5dc1225e9d2fcd2c07b00401aeac3b). 
+
+## Lead Senior Watson
+
+Confirmed fix. 
+
 # Issue M-5: There is no limit on the amount of fee users have to pay 
+
 Source: https://github.com/sherlock-audit/2022-09-harpie-judging/tree/main/008-M 
+
 ## Found by 
 hickuphh3, 0xSmartContract, xiaoming90, ak1, minhquanym, leastwood, defsec, HonorLt
 
@@ -203,8 +250,25 @@ Manual Review
 
 Consider adding an upper limit on the amount of fee users need to pay
 
+## Lead Senior Watson
+
+Currently there is no way to revoke a change fee controller request. I'd shy away from using a mapping, adds unnecessary overhead when it can be handled by a `pendingFeeController` variable. Also important to note that mapping in `changeFeeController()` is not cleared.
+
+## Harpie Team
+
+Using leastwood's suggestion of a timelock for feeController. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/9b75a000f6cb0798e650f1433012b2b52f7a0e2b). Supplementary fixes for this issue: 
+[1](https://github.com/Harpieio/contracts/pull/4/commits/c60dc166aab6f7067379ea3f1e39be2ae17cc2dc), 
+[2](https://github.com/Harpieio/contracts/pull/4/commits/ea97548c379ec9b48e42724a52a1ee7bd4cce6b7), 
+[3](https://github.com/Harpieio/contracts/pull/4/commits/8cfc07577c49eb0b0713fb5499ea9313153c2c7c). 
+
+## Lead Senior Watson
+
+Confirmed fixes. 
+
 # Issue M-6: Signature malleability not protected against 
+
 Source: https://github.com/sherlock-audit/2022-09-harpie-judging/tree/main/010-M 
+
 ## Found by 
 0xNazgul, pashov, IllIllI, ladboy233, defsec, sirhashalot
 
@@ -230,8 +294,19 @@ Manual Review
 ## Recommendation
 Change to version 4.7.3
 
+## Lead Senior Watson
+Good find and the fix seems straightforward. Upgrade OZ.
+
+## Harpie Team
+Updated openzeppelin NPM package to do ECDSA 4.7.3. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/74e54edfe43480f71d30acac578627c38366ffa6).
+
+## Lead Senior Watson
+Confirmed fix. 
+
 # Issue M-7: Unsafe casting of user amount from `uint256` to `uint128` 
+
 Source: https://github.com/sherlock-audit/2022-09-harpie-judging/tree/main/018-M 
+
 ## Found by 
 Lambda, Tomo, hickuphh3, IllIllI, defsec, sirhashalot
 
@@ -261,8 +336,20 @@ The user's balance is `type(uint128).max = 2**128`, but the incremented amount w
 
 `amountStored` should be of type `uint256`. Alternatively, use [OpenZeppelin’s SafeCast library](https://docs.openzeppelin.com/contracts/4.x/api/utils#SafeCast) when casting from `uint256` to `uint128`.
 
+## Lead Senior Watson
+Not sure, any tokens which would have a token supply over `type(uint128).max` but I guess it's best to be proactive. The proposed fix does create some issues. Instead of having less tokens transferred to the vault, the contract will revert and prevent the transfer entirely. Arguably more funds would be at risk, so you may as well use `uint256` then or accept the risk and keep the slot packing.
+
+## Harpie Team
+Decided to accept the risk of reverts on leastwood's comment on this issue since it's a lot of gas savings and there probably arent useful tokens w/ supply over (uint128).max. Used @openzeppelin/SafeCast. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/1ff8c0482c690fd44558adb15cb40515623ac5cd).
+
+## Lead Senior Watson
+Confirmed fix. 
+
+
 # Issue M-8: reduceERC721Fee function can not set fee when the NFT token ID is more than type(uint128).max 
+
 Source: https://github.com/sherlock-audit/2022-09-harpie-judging/tree/main/081-M 
+
 ## Found by 
 ak1
 
@@ -288,8 +375,19 @@ Change the function argument for `reduceERC721Fee` as shown below.
 
 `after fix:` function reduceERC721Fee(address _originalAddress, address _erc721Address, `uint256 _id,` uint128 _reduceBy) external returns (uint128)
 
+## Lead Senior Watson
+Good find! ERC721 standard doesn't enforce how `tokenId` is implemented for a given NFT. Could definitely be greater than `uint128`, although I've never seen a case where this is true.
+
+## Harpie Team
+Changed to uint256. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/de97103372a8fcd7b45aaa1b21e06ba13b82bbc6). 
+
+## Lead Senior Watson
+Confirmed fix. 
+
 # Issue M-9: Nonces not used in signed data 
+
 Source: https://github.com/sherlock-audit/2022-09-harpie-judging/tree/main/160-M 
+
 ## Found by 
 IllIllI
 
@@ -311,4 +409,10 @@ Manual Review
 
 ## Recommendation
 Include a nonce in what is signed
+
+## Harpie Team
+Fixed by changing nonce system to an incremental system. Fix [here](https://github.com/Harpieio/contracts/pull/4/commits/ee6f5cdf52fa5604d4693331189edff6558c9b8a).
+
+## Lead Senior Watson
+Not an issue AFAIK, miners can't reorder txs unless they are signed with the same nonce. There would have to be some serious mis-use of this function by the recipient address, i.e. they would have to ask the server to sign for two different addresses and then broadcast the txs with the same nonce for this call. The proposed fix could probably be safely removed but doesn't hurt to keep it there.
 
